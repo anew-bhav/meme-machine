@@ -2,11 +2,12 @@ module Api
   module V1
     class MemesController < ApplicationController
 
+      before_action :validate_request
       before_action :permit_params, only: :index
 
       def index
         process_params
-        render json: {success: 'true'}, status: 200
+        render json: {success: 'true'}, status: :ok
         EventPushJob.perform_async(@response_url, @event, event_params)
       end
 
@@ -48,6 +49,16 @@ module Api
             "url" => @url,
             "name" => 'Test'
           }
+        end
+      end
+
+      def validate_request
+        timestamp = request.headers['X-Slack-Request-Timestamp']
+        signature = request.headers['X-Slack-Signature']
+        body = request.body.read
+        response = Auth::Request.new(timestamp: timestamp, signature: signature, body: body).call
+        unless response[:success]
+          render json: response, status: :unauthorized
         end
       end
     end

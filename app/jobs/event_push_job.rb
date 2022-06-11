@@ -5,7 +5,7 @@ class EventPushJob
     case event
     when 'search_meme', 'next_page'
       response = ApiResponses::ResultResponse.new.call(**params)
-      RestClient.post(response_url,response )
+      RestClient.post(response_url, response)
     when 'send_meme'
       response = ApiResponses::SendResponse.new.call(**params)
       RestClient.post(response_url, response)

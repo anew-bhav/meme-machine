@@ -64,6 +64,6 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   config.hosts = [
-    'localhost', '6699-2405-201-680b-d1ab-7d7c-6c5d-56b6-a4d.in.ngrok.io'
+    'localhost', '2d5c-2405-201-680b-d1ab-c1c1-43c8-7e23-4236.in.ngrok.io'
   ]
 end
